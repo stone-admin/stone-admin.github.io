@@ -1,0 +1,695 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Games - KICKGOLF Official Site</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;family=Poppins:wght@400;600;700;800&amp;display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4ade80 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pink-gradient-text {
+            background: linear-gradient(135deg, #f472b6 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bounce-slow {
+            animation: bounce 3s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+            50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- MAIN HEADER &amp; NAVIGATION -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchPage('home')">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-900 flex items-center justify-center shadow-lg border border-slate-700">
+                        <i class="fa-solid fa-gem text-2xl text-slate-300"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black tracking-wider text-white Poppins">STONE</span>
+                        <p class="text-[10px] text-emerald-400 font-bold tracking-widest uppercase">Games</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex items-center gap-1">
+                    <button onclick="switchPage('home')" id="nav-home" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 bg-emerald-500/10 text-emerald-400">홈</button>
+                    <button onclick="switchPage('games')" id="nav-games" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 text-slate-300 hover:bg-slate-800 hover:text-white">게임 소개</button>
+                    <button onclick="switchPage('shop')" id="nav-shop" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 text-slate-300 hover:bg-slate-800 hover:text-white">상점 아이템</button>
+                    <button onclick="switchPage('support')" id="nav-support" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 text-slate-300 hover:bg-slate-800 hover:text-white">고객지원 &amp; 약관</button>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:block">
+                    <a href="https://play.google.com/apps/internaltest/4701682896060998885" target="_blank" class="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/20 flex items-center gap-2">
+                        <i class="fa-brands fa-google-play"></i> 다운로드 하기
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-900/95 backdrop-blur-lg px-4 py-6 space-y-3">
+            <button onclick="switchPage('home'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl bg-emerald-500/10 text-emerald-400 font-semibold">홈</button>
+            <button onclick="switchPage('games'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white">게임 소개</button>
+            <button onclick="switchPage('shop'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white">상점 아이템</button>
+            <button onclick="switchPage('support'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white">고객지원 &amp; 약관</button>
+            <hr class="border-slate-800">
+            <a href="https://play.google.com/apps/internaltest/4701682896060998885" target="_blank" onclick="toggleMobileMenu();" class="w-full text-center block py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl shadow-lg">
+                <i class="fa-brands fa-google-play mr-2"></i> 구글 플레이 다운로드
+            </a>
+        </div>
+    </header>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="flex-grow">
+        
+        <!-- PAGE 1: HOME -->
+        <section id="page-home" class="animate-fadeIn">
+            <!-- Hero Banner Section -->
+            <div class="relative overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#4ade80_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+                
+                <!-- Graphic Elements -->
+                <div class="absolute top-1/4 left-10 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                            <span class="px-4 py-1.5 rounded-full bg-slate-800 text-slate-300 text-xs font-bold uppercase tracking-widest border border-slate-700 inline-block">
+                                <i class="fa-solid fa-cube text-emerald-400 mr-1"></i> Developed by Stone Games
+                            </span>
+                            <h1 class="text-4xl sm:text-6xl font-black leading-tight text-white tracking-tight">
+                                발로 차서 홀인원!<br>
+                                세상에 없던 스포츠<br>
+                                <span class="gradient-text">KICKGOLF</span>
+                            </h1>
+                            <p class="text-base sm:text-lg text-slate-400 max-w-2xl">
+                                복잡한 골프 룰을 축구공과 강력한 발끝 슛으로 타파한다! <br>
+                                독창적 마인드를 지닌 개발 명가 <strong>'스톤(Stone)'</strong>이 설계한 환상적인 산업 단지 지형 속 다이내믹한 킥 퍼팅을 경험해 보세요.
+                            </p>
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                                <a href="https://play.google.com/apps/internaltest/4701682896060998885" target="_blank" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-bold rounded-2xl shadow-xl shadow-emerald-500/20 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                                    <i class="fa-solid fa-gamepad text-lg"></i> 지금 무료로 시작하기
+                                </a>
+                                <button onclick="switchPage('support')" class="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-2xl border border-slate-700 transition-all duration-300 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-circle-question"></i> 고객지원 바로가기
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Illustrated Mobile App Mockup -->
+                        <div class="lg:col-span-5 flex justify-center relative">
+                            <div class="relative w-72 h-[550px] rounded-[42px] border-[8px] border-slate-800 bg-slate-950 shadow-2xl overflow-hidden glass-panel">
+                                <!-- Camera notch -->
+                                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-2xl z-20"></div>
+                                
+                                <!-- Screen Content -->
+                                <div class="p-4 pt-10 h-full flex flex-col justify-between bg-gradient-to-b from-[#111c14] to-[#0d1527] relative">
+                                    <div class="flex items-center justify-between text-xs text-slate-400">
+                                        <span>KICKGOLF</span>
+                                        <div class="flex gap-1.5 items-center">
+                                            <i class="fa-solid fa-signal"></i>
+                                            <i class="fa-solid fa-wifi"></i>
+                                            <i class="fa-solid fa-battery-three-quarters"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Dynamic Simulated Game Graphic -->
+                                    <div class="flex-grow flex flex-col items-center justify-center py-6 text-center">
+                                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-slate-700 to-slate-900 flex items-center justify-center shadow-lg border border-slate-600 bounce-slow mb-4">
+                                            <i class="fa-solid fa-golf-ball-tee text-4xl text-white"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-emerald-400">STAGE 10</span>
+                                        <h3 class="text-lg font-black text-white mt-1">풀코스 그랜드 투어</h3>
+                                        <p class="text-[10px] text-slate-400 mt-1 max-w-[200px]">스톤이 선보이는 3회 왕복 순환 대작!</p>
+
+                                        <!-- Ball Route Animation -->
+                                        <div class="w-full mt-6 px-4">
+                                            <div class="h-1 w-full bg-slate-800 rounded-full relative overflow-hidden">
+                                                <div class="h-full w-2/3 bg-emerald-400 rounded-full"></div>
+                                            </div>
+                                            <div class="flex justify-between text-[8px] text-slate-500 mt-1">
+                                                <span>Tee (시작)</span>
+                                                <span>CP (성공)</span>
+                                                <span>Goal (골대)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 bg-slate-900/90 rounded-2xl border border-slate-800 text-center">
+                                        <p class="text-xs font-bold text-white mb-2">💎 오늘만 3배 이벤트 패키지!</p>
+                                        <div class="flex justify-center gap-1.5">
+                                            <span class="text-[9px] bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full font-bold">인기 최고</span>
+                                            <span class="text-[9px] bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full font-bold">한정 수량</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Features Brief -->
+            <div class="py-20 bg-slate-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                        <h2 class="text-3xl font-extrabold text-white">혁신적인 게임 플레이 시스템</h2>
+                        <p class="text-slate-400">스톤(Stone)의 기술력으로 완성된 물리 작용과 복잡한 스테이지 설계를 직접 경험해보세요.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="p-8 rounded-2xl glass-panel hover:border-emerald-500/50 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-compass-drafting text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">2배 확장 도전형 스테이지</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                공장의 외곽, 옥상, 좁은 탱크 틈새를 횡단하는 거대 동선. 지형지물을 활용해 한계에 도전해 보세요.
+                            </p>
+                        </div>
+                        <div class="p-8 rounded-2xl glass-panel hover:border-cyan-500/50 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-bullseye text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">체크포인트(CP) 시스템</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                단순히 공을 굴리는 것이 아닌 스위치 작동, 무빙 크레인 돌파 등 단계별 전략 미션을 성공해야만 골대로 가는 문이 열립니다.
+                            </p>
+                        </div>
+                        <div class="p-8 rounded-2xl glass-panel hover:border-pink-500/50 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-arrows-spin text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3">자동 슈팅 포인트(ASP)</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                특정 동선에 위치한 ASP에 도달하면 발사 장치가 작동! 원하는 최적의 가속도와 고저차 궤적으로 대포처럼 슈팅됩니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PAGE 2: GAMES (게임 소개) -->
+        <section id="page-games" class="hidden animate-fadeIn py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-emerald-400 font-bold uppercase tracking-widest text-xs">STAGE OVERVIEW BY STONE</span>
+                    <h2 class="text-4xl font-black text-white">KICKGOLF 대표 스테이지 미션 목록</h2>
+                    <p class="text-slate-400">실제 인게임 평면도에서 추출한 10단계 핵심 난이도 맵 데이터입니다.</p>
+                </div>
+
+                <!-- Custom Grid of Stage Overview Maps -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Stage Card 1 -->
+                    <div class="rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                        <div class="h-48 bg-slate-950 relative flex items-center justify-center overflow-hidden">
+                            <!-- Simulated Stage Map Preview -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/40 to-slate-950"></div>
+                            <svg class="w-full h-full opacity-60" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <path d="M10,80 Q30,20 50,80 T90,20" fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="5 5" />
+                                <circle cx="10" cy="80" r="4" fill="#3b82f6" />
+                                <circle cx="90" cy="20" r="4" fill="#f97316" />
+                            </svg>
+                            <span class="absolute top-3 left-3 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">Stage 1 (최하)</span>
+                            <span class="absolute bottom-3 right-3 bg-red-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded">빨간색 코스</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-lg font-bold text-white">대각선 왕복 장거리</h3>
+                            <p class="text-xs text-slate-400">광활한 중앙 대지를 2회 왕복하며 벽을 맞고 정교하게 멈추어 골인하는 기초 뱅크샷 코스.</p>
+                            <div class="flex justify-between items-center text-xs text-slate-500 pt-3 border-t border-slate-800">
+                                <span><i class="fa-solid fa-flag text-emerald-400"></i> 미션: 벽 1회 터치</span>
+                                <span>거리: 190m</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stage Card 2 -->
+                    <div class="rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                        <div class="h-48 bg-slate-950 relative flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/40 to-slate-950"></div>
+                            <svg class="w-full h-full opacity-60" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <rect x="35" y="20" width="30" height="30" rx="15" fill="#334155" />
+                                <rect x="35" y="60" width="30" height="30" rx="15" fill="#334155" />
+                                <path d="M10,50 L35,50 Q50,50 65,50 L90,50" fill="none" stroke="#f97316" stroke-width="3" />
+                                <circle cx="10" cy="50" r="4" fill="#3b82f6" />
+                                <circle cx="90" cy="50" r="4" fill="#f97316" />
+                            </svg>
+                            <span class="absolute top-3 left-3 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">Stage 2 (하)</span>
+                            <span class="absolute bottom-3 right-3 bg-orange-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded">주황색 코스</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-lg font-bold text-white">탱크-건물-탱크 통과</h3>
+                            <p class="text-xs text-slate-400">대형 오일 저장 탱크의 틈새를 정밀하게 두 차례 연쇄 통과해야 하는 유도 제어 코스.</p>
+                            <div class="flex justify-between items-center text-xs text-slate-500 pt-3 border-t border-slate-800">
+                                <span><i class="fa-solid fa-flag text-emerald-400"></i> 미션: 틈새 2회 통과</span>
+                                <span>거리: 220m</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stage Card 3 -->
+                    <div class="rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                        <div class="h-48 bg-slate-950 relative flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/40 to-slate-950"></div>
+                            <svg class="w-full h-full opacity-60" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <path d="M10,20 L50,20 L50,80 L90,80" fill="none" stroke="#eab308" stroke-width="3" />
+                                <circle cx="10" cy="20" r="4" fill="#3b82f6" />
+                                <circle cx="90" cy="80" r="4" fill="#f97316" />
+                            </svg>
+                            <span class="absolute top-3 left-3 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">Stage 3 (중하)</span>
+                            <span class="absolute bottom-3 right-3 bg-yellow-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded">연두색 코스</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-lg font-bold text-white">Z-Z-Z 뱅크샷 마스터</h3>
+                            <p class="text-xs text-slate-400">지그재그형 건물 골목 통로에서 외벽의 각도를 계산하여 3회 이상의 연쇄 도탄 퍼팅을 엮어내는 기하학 코스.</p>
+                            <div class="flex justify-between items-center text-xs text-slate-500 pt-3 border-t border-slate-800">
+                                <span><i class="fa-solid fa-flag text-emerald-400"></i> 미션: 뱅크샷 3회 완료</span>
+                                <span>거리: 250m</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stage Card 10 (HELL) -->
+                    <div class="rounded-2xl border border-rose-500/30 bg-slate-900 overflow-hidden group hover:border-rose-500/60 transition-all duration-300 lg:col-span-3">
+                        <div class="h-56 bg-gradient-to-r from-slate-950 via-rose-950/30 to-slate-950 relative flex items-center justify-center overflow-hidden p-6">
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#f43f5e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <div class="z-10 text-center space-y-3">
+                                <span class="bg-rose-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">MASTER CLASS - HELL BY STONE</span>
+                                <h3 class="text-2xl font-black text-white">Stage 10: 풀코스 그랜드 투어</h3>
+                                <p class="text-xs text-slate-300 max-w-xl mx-auto">
+                                    지상 미로 횡단, 옥상 상승 바람 동선, 그리고 가장 좁고 높은 공장 연결 다리(Bridge)까지 모두 엮어 3회 왕복해야 하는 마스터피스 최종 난코스.
+                                </p>
+                                <div class="flex justify-center gap-6 text-xs text-slate-400 font-semibold">
+                                    <span><i class="fa-solid fa-layer-group text-rose-500"></i> 경유 옥상: 5개소</span>
+                                    <span><i class="fa-solid fa-arrows-split-up-and-left text-cyan-400"></i> ASP 포탈: 3개소</span>
+                                    <span><i class="fa-solid fa-arrows-to-dot text-yellow-500"></i> 다리 바운드: 10회 이상</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Trailer / Youtube Embed Placeholder -->
+                <div class="mt-20 glass-panel p-8 rounded-3xl border border-slate-800">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6">
+                            <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">PROMOTION VIDEO</span>
+                            <h2 class="text-3xl font-bold text-white">KICKGOLF 시네마틱 트레일러</h2>
+                            <p class="text-slate-400 leading-relaxed text-sm">
+                                정교한 물리 계산 엔진과 카툰 스타일의 수려한 그래픽을 직접 확인하세요. 실제 타격 타이밍과 공의 바운드 및 ASP 타격 궤적을 확인하여 최고 플레이 전술을 미리 수립할 수 있습니다.
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 text-sm text-slate-300">
+                                    <div class="w-6 h-6 rounded-full bg-emerald-500/15 flex items-center justify-center text-emerald-400 text-xs">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <span>실시간 공 역학 및 구동 물리 완벽 제어</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-300">
+                                    <div class="w-6 h-6 rounded-full bg-emerald-500/15 flex items-center justify-center text-emerald-400 text-xs">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <span>각종 모바일 기기 및 스마트 태블릿 60FPS 최적화</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative rounded-2xl overflow-hidden aspect-video bg-slate-950 border border-slate-800 flex items-center justify-center">
+                            <!-- Youtube Simulated Player -->
+                            <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1551818255-e6e10975bc17?auto=format&amp;fit=crop&amp;q=80&amp;w=800');"></div>
+                            <div class="z-10 text-center">
+                                <button class="w-16 h-16 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center text-2xl shadow-lg transition-transform duration-300 hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </button>
+                                <p class="text-[10px] text-slate-400 mt-3 uppercase tracking-widest font-bold">Play Demo Video (1:30)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PAGE 3: SHOP (상점 아이템) -->
+        <section id="page-shop" class="hidden animate-fadeIn py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-pink-400 font-bold uppercase tracking-widest text-xs">IN-APP PURCHASES</span>
+                    <h2 class="text-4xl font-black text-white">공식 인게임 상점 명칭 가이드</h2>
+                    <p class="text-slate-400">스톤 스튜디오의 스포츠형 랭킹 컨셉과 활력이 가득 담긴 게임 내 통화 및 특급 주얼리 라인업.</p>
+                </div>
+
+                <!-- Gems Shop Section -->
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400">
+                            <i class="fa-solid fa-gem text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">루비 보석 상품 (1~6등급)</h3>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                        <!-- Gem Tier 1 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-pink-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">1등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-gem text-pink-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">활력의 조각</h4>
+                                <p class="text-[10px] text-pink-400 font-extrabold">+90 젬</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200">₩ 1,400</div>
+                        </div>
+
+                        <!-- Gem Tier 2 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-pink-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">2등급</span>
+                                <div class="py-4 text-3xl flex justify-center gap-1"><i class="fa-solid fa-gem text-pink-400 text-lg"></i><i class="fa-solid fa-gem text-pink-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">연습생의 젬</h4>
+                                <p class="text-[10px] text-pink-400 font-extrabold">+500 젬</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200">₩ 6,500</div>
+                        </div>
+
+                        <!-- Gem Tier 3 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-pink-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">3등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-bag-shopping text-pink-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">프로의 비축분</h4>
+                                <p class="text-[10px] text-pink-400 font-extrabold">+1,200 젬</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200">₩ 13,000</div>
+                        </div>
+
+                        <!-- Gem Tier 4 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-pink-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">4등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-basket-shopping text-pink-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">승리자의 바구니</h4>
+                                <p class="text-[10px] text-pink-400 font-extrabold">+2,500 젬</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200">₩ 29,000</div>
+                        </div>
+
+                        <!-- Gem Tier 5 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-pink-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-pink-500/20 text-pink-400 border border-pink-500/30 px-2.5 py-0.5 rounded-full font-bold uppercase">5등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-vault text-pink-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">챔피언의 금고</h4>
+                                <p class="text-[10px] text-pink-400 font-extrabold">+6,500 젬</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200">₩ 65,000</div>
+                        </div>
+
+                        <!-- Gem Tier 6 -->
+                        <div class="bg-gradient-to-b from-slate-900 to-pink-950/20 rounded-2xl p-5 border border-pink-500/30 text-center space-y-4 hover:border-pink-500/60 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-pink-500 text-white px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">추천 패키지</span>
+                                <div class="py-4 text-4xl bounce-slow"><i class="fa-solid fa-mountain text-pink-400"></i></div>
+                                <h4 class="text-sm font-extrabold text-white">월드클래스 트로피</h4>
+                                <p class="text-[10px] text-pink-400 font-extrabold">+14,000 젬</p>
+                            </div>
+                            <div class="bg-pink-600 py-2 rounded-xl text-xs font-black text-white">₩ 130,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gold Shop Section -->
+                <div class="space-y-8 mt-24">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+                            <i class="fa-solid fa-coins text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">골드 코인 상품 (1~6등급)</h3>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                        <!-- Gold Tier 1 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">1등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-coins text-amber-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">첫 티오프 상금</h4>
+                                <p class="text-[10px] text-amber-400 font-extrabold">9,600 골드</p>
+                            </div>
+                            <div class="bg-amber-600/20 text-amber-400 py-2 rounded-xl text-xs font-black border border-amber-500/20">일일 1회 무료</div>
+                        </div>
+
+                        <!-- Gold Tier 2 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">2등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-piggy-bank text-amber-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">연습장 대관료</h4>
+                                <p class="text-[10px] text-amber-400 font-extrabold">28,800 골드</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200 flex items-center justify-center gap-1.5"><i class="fa-solid fa-gem text-pink-400 text-[10px]"></i> 80</div>
+                        </div>
+
+                        <!-- Gold Tier 3 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">3등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-sack-dollar text-amber-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">프로의 품위 유지비</h4>
+                                <p class="text-[10px] text-amber-400 font-extrabold">115,200 골드</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200 flex items-center justify-center gap-1.5"><i class="fa-solid fa-gem text-pink-400 text-[10px]"></i> 280</div>
+                        </div>
+
+                        <!-- Gold Tier 4 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">4등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-box-open text-amber-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">투어 대회 우승컵</h4>
+                                <p class="text-[10px] text-amber-400 font-extrabold">345,600 골드</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200 flex items-center justify-center gap-1.5"><i class="fa-solid fa-gem text-pink-400 text-[10px]"></i> 650</div>
+                        </div>
+
+                        <!-- Gold Tier 5 -->
+                        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-center space-y-4 hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full font-bold uppercase">5등급</span>
+                                <div class="py-4 text-3xl"><i class="fa-solid fa-truck-ramp-box text-amber-400"></i></div>
+                                <h4 class="text-sm font-bold text-white">스폰서 계약금</h4>
+                                <p class="text-[10px] text-amber-400 font-extrabold">1,036,800 골드</p>
+                            </div>
+                            <div class="bg-slate-950 py-2 rounded-xl text-xs font-black text-slate-200 flex items-center justify-center gap-1.5"><i class="fa-solid fa-gem text-pink-400 text-[10px]"></i> 1,500</div>
+                        </div>
+
+                        <!-- Gold Tier 6 -->
+                        <div class="bg-gradient-to-b from-slate-900 to-amber-950/20 rounded-2xl p-5 border border-amber-500/30 text-center space-y-4 hover:border-amber-500/60 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">가성비 최고</span>
+                                <div class="py-4 text-4xl bounce-slow"><i class="fa-solid fa-warehouse text-amber-400"></i></div>
+                                <h4 class="text-sm font-extrabold text-white">올스타 명예의 전당</h4>
+                                <p class="text-[10px] text-amber-400 font-extrabold">4,147,200 골드</p>
+                            </div>
+                            <div class="bg-amber-500 text-slate-950 py-2 rounded-xl text-xs font-black flex items-center justify-center gap-1.5"><i class="fa-solid fa-gem text-slate-950 text-[10px]"></i> 4,500</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PAGE 4: SUPPORT (고객지원 &amp; 약관) -->
+        <section id="page-support" class="hidden animate-fadeIn py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    
+                    <!-- Left: Contact Form -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div>
+                            <span class="text-emerald-400 font-bold uppercase tracking-widest text-xs">CUSTOMER SERVICE</span>
+                            <h2 class="text-3xl font-black text-white mt-2">고객지원 문의 센터</h2>
+                            <p class="text-slate-400 mt-2 text-sm">
+                                KICKGOLF 이용과 관련하여 의견, 버그 제보, 기술적 애로사항이 있으신가요? 스톤 스튜디오 기술팀이 지원해 드리겠습니다.
+                            </p>
+                        </div>
+
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-emerald-400"></i> 지원 티켓 접수 (Google 설문지 호스팅)
+                            </h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">이메일 주소</label>
+                                    <input type="email" placeholder="example@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-slate-300">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">문의 분류</label>
+                                    <select class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-slate-300">
+                                        <option>버그 제보 / 리포트</option>
+                                        <option>인앱 결제 및 보상 누락</option>
+                                        <option>회사 제휴 및 제안</option>
+                                        <option>기타 일반 질문</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">상세 내용</label>
+                                    <textarea rows="4" placeholder="문의 사항을 상세히 기재해 주세요." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-slate-300"></textarea>
+                                </div>
+                                <button onclick="simulateSubmit()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold text-sm rounded-xl hover:from-emerald-600 hover:to-cyan-600 transition-all duration-300 shadow-lg shadow-emerald-500/10">
+                                    설문 등록 및 접수 완료
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Privacy Policy -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <h3 class="text-2xl font-bold text-white">개인정보처리방침 (Privacy Policy)</h3>
+                            <span class="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/20">구글스토어 필수</span>
+                        </div>
+
+                        <!-- Policy Text Sandbox Scrollable Box -->
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 h-[400px] overflow-y-scroll text-xs text-slate-400 space-y-4 leading-relaxed">
+                            <h4 class="text-sm font-bold text-white">1. 개인정보의 수집 범위 및 방법</h4>
+                            <p>
+                                주식회사 스톤 (이하 '회사')은 비공개 테스트 및 프로덕션 출시 서비스 제공을 위해 최소한의 개인 식별 불가능한 단말 정보(기기 모델명, OS 버전, 광고 식별자)만을 자동 수집할 수 있으며, 결제 정보 등은 구글 플레이 결제 모듈을 통해서만 암호화 처리됩니다.
+                            </p>
+                            <h4 class="text-sm font-bold text-white">2. 개인정보의 보유 및 이용 기간</h4>
+                            <p>
+                                수집된 기기 정보 및 버그 로그 데이터는 통계 분석 및 서비스 안정성 점검을 위해 최대 3개월 동안 암호화 보관된 후 영구히 물리적으로 소멸 처리됩니다.
+                            </p>
+                            <h4 class="text-sm font-bold text-white">3. 이용자 및 법정대리인의 권리</h4>
+                            <p>
+                                유저는 언제든지 단말기 설정을 통해 기기 분석 데이터 수집 동의를 철회할 수 있으며, 이로 인해 인게임 플레이의 제한이 따르지는 않습니다.
+                            </p>
+                            <h4 class="text-sm font-bold text-white">4. 개인정보 보호책임자 및 접수</h4>
+                            <p>
+                                개인정보 권리 침해 관련 상담 및 문의는 본 페이지 좌측의 '고객지원 문의 센터' 또는 아래의 메일 주소로 접수해 주시면 처리 후 즉각 서면 회신을 드리겠습니다.<br>
+                                대표 메일: <span class="text-emerald-400">sungmin322@gmail.com</span>
+                            </p>
+                        </div>
+                        <p class="text-xs text-slate-500">
+                            * 위의 개인정보처리방침 주소는 구글 플레이 콘솔 내 <strong>'앱 콘텐츠 -> 개인정보처리방침'</strong> 필수 등록 요구란에 활용할 수 있는 법적 표준 규격입니다.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <div class="flex justify-center gap-6 text-xl">
+                <a href="#" class="text-slate-500 hover:text-white transition-colors duration-300"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="text-slate-500 hover:text-white transition-colors duration-300"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="text-slate-500 hover:text-white transition-colors duration-300"><i class="fa-solid fa-gamepad"></i></a>
+                <a href="#" class="text-slate-500 hover:text-white transition-colors duration-300"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="text-xs text-slate-600">
+                © 2026 Stone Games Inc. All Rights Reserved. <br>
+                Designed for Google Sites integration and Google Play Release checklist.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Tab Logic Script -->
+    <script>
+        function switchPage(pageId) {
+            // Hide all pages
+            document.getElementById('page-home').classList.add('hidden');
+            document.getElementById('page-games').classList.add('hidden');
+            document.getElementById('page-shop').classList.add('hidden');
+            document.getElementById('page-support').classList.add('hidden');
+
+            // Show selected page
+            document.getElementById('page-' + pageId).classList.remove('hidden');
+
+            // Reset navigation tab states
+            const tabs = ['home', 'games', 'shop', 'support'];
+            tabs.forEach(tab => {
+                const element = document.getElementById('nav-' + tab);
+                if (tab === pageId) {
+                    element.className = "px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 bg-emerald-500/10 text-emerald-400";
+                } else {
+                    element.className = "px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 text-slate-300 hover:bg-slate-800 hover:text-white";
+                }
+            });
+
+            // Smooth scroll to top of page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = "fa-solid fa-xmark text-2xl";
+            } else {
+                menu.classList.add('hidden');
+                icon.className = "fa-solid fa-bars text-2xl";
+            }
+        }
+
+        function simulateSubmit() {
+            // Simulated form submission (replaces browser alerts)
+            const submitMsg = document.createElement('div');
+            submitMsg.className = "fixed bottom-5 right-5 z-50 bg-emerald-500 text-white font-bold py-3 px-6 rounded-2xl shadow-2xl flex items-center gap-2 animate-bounce";
+            submitMsg.innerHTML = '<i class="fa-solid fa-circle-check"></i> 성공적으로 구글 드라이브 시트에 저장 접수되었습니다!';
+            document.body.appendChild(submitMsg);
+            
+            setTimeout(() => {
+                submitMsg.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
